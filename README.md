@@ -7,14 +7,11 @@
 | nickname             | string | null: false |
 | email                | string | null: false, unique: true |
 | encrypted_password   | string | null: false |
-| password_confirmation| string | null: false |
 | last_name            | string | null: false |
 | first_name           | string | null: false |
 | last_name_kana       | string | null: false |
 | first_name_kana      | string | null: false |
-| birthday_year        | string | null: false |
-| birthday_month       | string | null: false |
-| birthday_day         | string | null: false |
+| birthday             | date   | null: false |
 
 ### Association
 
@@ -23,46 +20,41 @@
 
 ## items テーブル
 
-| Column               | Type   | Options     |
-| ------               | ------ | ----------- |
-| name                 | string | null: false |
-| description          | string | null: false |
-| price                | string | null: false |
-| category             | string | null: false |
-| condition            | string | null: false |
-| delivery_fee_payment | string | null: false |
-| area                 | string | null: false |
-| delivery_duration    | string | null: false |
-| user                 | string | null: false | 
+| Column               | Type    | Options     |
+| ------               | ------  | ----------- |
+| name                 | string  | null: false |
+| description          | text    | null: false |
+| price                | integer | null: false |
+| category_id          | integer | null: false |
+| condition            | string  | null: false |
+| delivery_fee_payment | string  | null: false |
+| area                 | string  | null: false |
+| delivery_duration    | string  | null: false |
+| user                 | string  | null: false | 
 
 
 ### Association
 
 
-- belongs_to :users
-- has_one :buying
+- belongs_to :user
+
 
 ## buyers テーブル
      
-| Column               | Type       | Options |
-| ------               | ---------- | --------|
-| card_number          |integer | null: false |
-|card_card_expirymonth |integer | null: false |
-|card_expiryyear       |integer | null: false |
-|card_cvc              |integer | null: false |
-|postalcode            |integer | null: false |
-|prefecture            |integer | null: false |
-|city                  |integer | null: false |
-|house_number          |integer | null: false |
-building_name          |integer | null: false |
-phone_number           |integer | null: false |
+| Column       | Type   | Options     |
+| ------       | -------| --------    |
+|postalcode    |integer | null: false |
+|prefecture    |integer | null: false |
+|city          |integer | null: false |
+|house_number  |integer | null: false |
+|building_name |integer | null: false |
+|phone_number  |integer | null: false |
 
 
 
 ### Association
-
-- belongs_to :users
 - has_one  :buying
+- belongs_to :buying
 
 ## buying テーブル
 
@@ -73,5 +65,5 @@ phone_number           |integer | null: false |
 
 ### Association
 
-- belongs_to :items
-- belongs_to :buyers
+- belongs_to :item
+- has_one :items
