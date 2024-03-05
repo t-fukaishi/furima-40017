@@ -20,40 +20,42 @@
 
 ## items テーブル
 
-| Column               | Type    | Options     |
-| ------               | ------  | ----------- |
-| name                 | string  | null: false |
-| description          | text    | null: false |
-| price                | integer | null: false |
-| category_id          | integer | null: false |
-| condition            | string  | null: false |
-| delivery_fee_payment | string  | null: false |
-| area                 | string  | null: false |
-| delivery_duration    | string  | null: false |
-| user                 | string  | null: false | 
+| Column                  | Type        | Options     |
+| ------                  | ------      | ----------- |
+| name                    | string      | null: false |
+| description             | text        | null: false |
+| price                   | integer     | null: false |
+| category_id             | integer     | null: false |
+| condition_id            |  integer    | null: false |
+| delivery_fee_payment_id |  integer    | null: false |
+| area_id                 |  integer    | null: false |
+| delivery_duration_id    |  integer    | null: false |
+| user                    | references  | null: false | 
 
 
 ### Association
 
-
+- has_one :buying
 - belongs_to :user
 
 
 ## buyers テーブル
      
-| Column       | Type   | Options     |
-| ------       | -------| --------    |
-|postalcode    |integer | null: false |
-|prefecture    |integer | null: false |
-|city          |integer | null: false |
-|house_number  |integer | null: false |
-|building_name |integer | null: false |
-|phone_number  |integer | null: false |
-
+| Column             | Type      | Options     |
+| ------             | -------   | --------    |
+|postalcode          |integer    | null: false |
+|prefecture          |integer    | null: false |
+|shipping_prefecture |integer    | null: false |
+|shipping_adress     |integer    | null: false |
+|city                |integer    | null: false |
+|house_number        |integer    | null: false |
+|building_name       |integer    |             |
+|phone_number        |string     | null: false |
+|buying              |references | null: false |
 
 
 ### Association
-- has_one  :buying
+
 - belongs_to :buying
 
 ## buying テーブル
