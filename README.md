@@ -28,7 +28,7 @@
 | category_id             | integer     | null: false |
 | condition_id            |  integer    | null: false |
 | delivery_fee_payment_id |  integer    | null: false |
-| area_id                 |  integer    | null: false |
+| prefecture_id           |  integer    | null: false |
 | delivery_duration_id    |  integer    | null: false |
 | user                    | references  | null: false, foreign_key: true | 
 
@@ -43,13 +43,11 @@
      
 | Column             | Type      | Options     |
 | ------             | -------   | --------    |
-|postalcode          |integer    | null: false |
-|prefecture          |integer    | null: false |
-|shipping_prefecture |integer    | null: false |
-|shipping_adress     |integer    | null: false |
-|city                |integer    | null: false |
-|house_number        |integer    | null: false |
-|building_name       |integer    |             |
+|postalcode          |string     | null: false |
+|prefecture_id       |integer    | null: false |
+|city                |string     | null: false |
+|house_number        |string     | null: false |
+|building_name       |string     |             |
 |phone_number        |string     | null: false |
 |buying              |references | null: false , foreign_key: true|
 
