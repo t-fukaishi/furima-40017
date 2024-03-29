@@ -3,14 +3,27 @@ class PurchaseBuyer
   attr_accessor :postalcode, :prefecture_id, :city, :house_number, :building_name, :phone_number, :purchase, :user_id, :item_id
 
   with_options presence: true do
-    validates :postalcode, presence: true, format: {with: /\A[0-9]{3}-[0-9]{4}\z/, message: "is invalid. Include hyphen(-)"}
-    validates :city, presence: true
-    validates :house_number, presence: true
-    validates :phone_number, presence: true, format: { with: /\A\d{10,11}\z/ }
-    validates :user_id
+    <% if @purchase_buyer.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@purchase_buyer.errors.count, "error") %> prohibited this purchase_buyer from being saved:</h2>
     
+        <ul>
+        <% @purchase_buyer.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+      validates :postal_code
+      validates :postal_code, format: { with: /\A\d{3}-\d{4}\z/}
+      validates :prefecture_id , numericality: { greater_than: 0, only_integer: true}
+      validates :city
+      validates :house_number
+      validates :phone_numbe
+      validates :phone_number, format:  length: { minimum: 10 }
+      validates :phone_number, format: { with: /\A\d+\z/ }
+      validates :user_id
   end
-  validates :prefecture, numericality: {other_than: 0, message: "can't be blank"}
+  
 
   def save
   
