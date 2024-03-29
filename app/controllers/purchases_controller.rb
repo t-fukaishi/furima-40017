@@ -6,6 +6,10 @@ class PurchasesController < ApplicationController
     @purchase_form = PurchaseForm.new
   end
 
+  def create
+    Purchase.create(purchase_params)
+  end
+
   def show
     @buyer = Buyer.new
     @buyers = @purchase.buyers.includes(:user)
