@@ -7,10 +7,10 @@ class PurchasesController < ApplicationController
   end
 
   def create
-   @purchase_buyer = PurchaseBuyer.new(purchase_params)
+    @purchase = PurchaseBuyer.new(purchase_params)
 
-    if @purchase_buyer.valid?
-      @purchase_buyer.save
+    if @purchase.valid?
+       @purchase.save
       redirect_to root_path
     else
       render :index, status: :unprocessable_entity
