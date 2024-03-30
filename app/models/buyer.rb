@@ -1,4 +1,4 @@
-class Byer < ApplicationRecord
+class Buyer < ApplicationRecord
 belongs_to :purchase
 
 
