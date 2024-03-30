@@ -3,16 +3,6 @@ class PurchaseBuyer
   attr_accessor :postalcode, :prefecture_id, :city, :house_number, :building_name, :phone_number, :purchase, :user_id, :item_id
 
   with_options presence: true do
-    <% if @purchase_buyer.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@purchase_buyer.errors.count, "error") %> prohibited this purchase_buyer from being saved:</h2>
-    
-        <ul>
-        <% @purchase_buyer.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-        </ul>
-      </div>
       validates :postal_code
       validates :postal_code, format: { with: /\A\d{3}-\d{4}\z/}
       validates :prefecture_id , numericality: { greater_than: 0, only_integer: true}
