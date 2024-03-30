@@ -3,7 +3,7 @@ class PurchasesController < ApplicationController
   before_action :set_purchase, only: [:show]
 
   def index
-   # @purchase_form = PurchaseBuyer.new
+   @purchase_form = PurchaseBuyer.new
   end
 
   def create

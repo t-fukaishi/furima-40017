@@ -8,8 +8,8 @@ class PurchaseBuyer
       validates :prefecture_id , numericality: { greater_than: 0, only_integer: true}
       validates :city
       validates :house_number
-      validates :phone_numbe
-      validates :phone_number, format:  length: { minimum: 10 }
+      validates :phone_number
+      validates :phone_number, length: { minimum: 10 }
       validates :phone_number, format: { with: /\A\d+\z/ }
       validates :user_id
   end
@@ -17,9 +17,8 @@ class PurchaseBuyer
 
   def save
   
-    buyer = Buyer.create(postalcode: postalcode,city: city,house_number: house_number,building_name: building_name,phone_number: phone_number,purchase: purchase)
+    buyer = Buyer.create!(postalcode: postalcode,city: city,house_number: house_number,building_name: building_name,phone_number: phone_number,purchase: purchase)
 
-    Purchase.create(user_id: user_id, item_id: item_id)
+    Purchase.create!(user_id: user_id, item_id: item_id)
   end
-
 end

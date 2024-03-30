@@ -1,5 +1,5 @@
 <%= render "shared/second-header"%>
-<%= form_with model: @purchase, id: 'charge-form', class: 'transaction-form-wrap', local: true do |f| %>
+<%= form_with model: @purchase, url: item_purchases_path, id: 'charge-form', class: 'transaction-form-wrap', local: true do |f| %>
 <div class='transaction-contents'>
   <div class='transaction-main'>
     <h1 class='transaction-title-text'>
@@ -86,7 +86,7 @@
           <label class="form-text">都道府県</label>
           <span class="indispensable">必須</span>
         </div>
-        <%= f.collection_select(:prefecture, prefectures, :id, :name, {}, {class:"select-box", id:"prefecture"}) %>
+        <%= f.collection_select(:prefecture_id, Prefecture.all, :id, :name, {}, {class:"select-box", id:"prefecture"}) %>
       </div>
       <div class="form-group">
         <div class='form-text-wrap'>
