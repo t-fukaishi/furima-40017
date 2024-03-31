@@ -15,7 +15,7 @@ RSpec.describe Buyer, type: :model do
       it '郵便番号が空では保存できない' do
       @buyer.postalcode = ''
       @buyer.valid?
-      expect(@buyer.errors.full_messages).to include("Postalcode is invalid. Enter it as follows (e.g. 123-4567)")
+      expect(@buyer.errors.full_messages).to include("Postalcode can't be blank")
       end 
 
       it '郵便番号は、「3桁ハイフン4桁」の半角文字列でなければ保存できない' do
