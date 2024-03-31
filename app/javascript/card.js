@@ -1,9 +1,9 @@
-//document.getElementById("button").addEventListener('click', function() {
-  //alert('購入ボタンがクリックされました！');
-//});
+const pay = () => {
+  const form = document.getElementById('charge-form')
+  form.addEventListener("submit", (e) => {
+    console.log("購入ボタンが押されました！")
+    e.preventDefault();
+  });
+};
 
-const buy_Button = document.getElementById("button")
-
-buy_Button.addEventListener('click', function(){
-  console.log("購入ボタンが押されました！");
-});
+window.addEventListener("turbo:load", pay);
