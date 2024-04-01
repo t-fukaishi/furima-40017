@@ -1,5 +1,6 @@
 const pay = () => {
-  const payjp = Payjp('pk_test_8356f34e1d3bd0c9799c57b8')// PAY.JPテスト公開鍵
+  const publicKey = gon.public_key
+  const payjp = Payjp(publicKey) // PAY.JPテスト公開鍵
 
   const elements = payjp.elements();
   const numberElement = elements.create('cardNumber');
@@ -33,18 +34,5 @@ const pay = () => {
 };
 
 window.addEventListener("load", pay);
+window.addEventListener("turbo:render", pay);
 
-
-
-
-
-
-//const pay = () => {
-  //const form = document.getElementById('charge-form')
-  //form.addEventListener("submit", (e) => {
-    //console.log("購入ボタンが押されました！")
-   // e.preventDefault();
-  //});
-//};
-
-//window.addEventListener("turbo:load", pay);

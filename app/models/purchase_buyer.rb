@@ -1,7 +1,6 @@
 class PurchaseBuyer
-  include ActiveModel::Model
-  attr_accessor :postalcode, :prefecture_id, :city, :house_number, :building_name, :phone_number, :purchase, :user_id, :item_id
-
+ include ActiveModel::Model
+  attr_accessor :token, :postalcode, :prefecture_id, :city, :house_number, :building_name, :phone_number, :purchase, :user_id, :item_id
   with_options presence: true do
       validates :postalcode, format: { with: /\A\d{3}-\d{4}\z/, message: "is invalid. Enter it as follows (e.g. 123-4567)" }
       validates :prefecture_id , numericality: { greater_than: 0, only_integer: true, message: "can't be blank"}

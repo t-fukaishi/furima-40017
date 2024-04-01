@@ -2,30 +2,50 @@ class PurchasesController < ApplicationController
 
   before_action :set_purchase, only: [:show]
 
+  class Purchase
+    attr_accessor :price, :token
+  end
+
   def index
+   gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
    @purchase = PurchaseBuyer.new
   end
 
   def create
+    #Purchase.create(purchase_params)
     @purchase = PurchaseBuyer.new(purchase_params)
+    @item = Item.find(purchase_params[:item_id])
 
     if @purchase.valid?
+      
+      pay_item
+  
        @purchase.save
       redirect_to root_path
     else
+      gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
       render :index, status: :unprocessable_entity
     end
   end
 
-  def show
-    @buyer = Buyer.new
-    @buyers = @purchase.buyers.includes(:user)
+ private
+  def purchase_params
+    params.require(:purchase_buyer).permit(:postalcode, :prefecture_id, :city, :house_number, :building_name, :phone_number).merge(token: params[:token], user_id: current_user.id,item_id: params[:item_id])
   end
 
-  private
-  def purchase_params
-    params.require(:purchase_buyer).permit(:postalcode, :prefecture_id, :city, :house_number, :building_name, :phone_number).merge(user_id: current_user.id,item_id: params[:item_id])
+  #class Purchase
+    #attr_accessor :token
+  #end
+
+  def pay_item
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]  # 自身のPAY.JPテスト秘密鍵を記述しましょう
+    Payjp::Charge.create(
+      amount: @item.price,  # 商品の値段
+      card: purchase_params[:token],     # カードトークン
+      currency: 'jpy'                 # 通貨の種類（日本円）
+    )
   end
+
 
   def set_purchase
     @purchase = Purchase.find(params[:id])
@@ -38,28 +58,3 @@ class PurchasesController < ApplicationController
   end
 
 end
-
-
-# Parameters: {"authenticity_token"=>"[FILTERED]", 
-
-#     "postalcode"=>"274-0825", 
-#     "prefecture_id"=>"12", 
-#     "city"=>"",
-#     "house_number"=>"４－３４－１０",
-#     "building_name"=>"", 
-#     "phone_number"=>"09069277820"
-
-
-# Parameters: {"authenticity_token"=>"[FILTERED]", 
-#   "item"=>{
-#     "image"=>#<ActionDispatch::Http::UploadedFile:0x00007fe9919ff010 @tempfile=#<Tempfile:/tmp/RackMultipart20240330-269052-7nqg4p.png>, 
-#     "name"=>"test",
-#     "description"=>"test",
-#     "category_id"=>"2", 
-#     "condition_id"=>"2", 
-#     "delivery_fee_payment_id"=>"2",
-#     "prefecture_id"=>"13", 
-#     "delivery_duration_id"=>"2", 
-#     "price"=>"3000"
-#   },
-#       "commit"=>"出品する"}
