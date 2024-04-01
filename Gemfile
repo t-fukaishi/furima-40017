@@ -92,3 +92,7 @@ gem 'active_hash'
 group :development, :test do
   gem 'pry-rails'
 end
+
+gem 'payjp'
+
+gem 'gon'
