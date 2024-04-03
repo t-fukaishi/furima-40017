@@ -1,7 +1,13 @@
 class PurchasesController < ApplicationController
 
-  before_action :set_purchase, only: [:show]
+  before_action :authenticate_user!, only: [:index]
+  before_action :set_item, only: [:index, :create]
 
+  before_action :redirect_if_not_eligible, only: [:index]
+
+  before_action :set_purchase, only: [:show, :edit]
+  before_action :move_to_index, except: [:index, :show, :search]
+  
   class Purchase
     attr_accessor :price, :token
   end
@@ -9,6 +15,7 @@ class PurchasesController < ApplicationController
   def index
    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
    @purchase = PurchaseBuyer.new
+   @item = Item.find(params[:item_id])
   end
 
   def create
@@ -47,8 +54,13 @@ class PurchasesController < ApplicationController
   end
 
 
-  def set_purchase
-    @purchase = Purchase.find(params[:id])
+  def set_item
+    @item = Item.find(params[:item_id])
+  end
+  def redirect_if_not_eligible
+    if current_user.id == @item.user.id || @item.purchase.present?
+      redirect_to root_path
+    end
   end
 
   def move_to_index
@@ -56,5 +68,7 @@ class PurchasesController < ApplicationController
       redirect_to action: :index
     end
   end
+
+
 
 end

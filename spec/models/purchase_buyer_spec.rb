@@ -52,7 +52,14 @@ RSpec.describe Buyer, type: :model do
       @buyer.phone_number = '090-1234-56789'
       @buyer.valid?
       expect(@buyer.errors.full_messages).to include("Phone number is invalid")
-      end 
+      end
+
+      it "tokenが空では登録できないこと" do
+        @purchase.token = nil
+        @purchase.valid?
+        expect(@purchase.errors.full_messages).to include("Token can't be blank")
+      end
+      
     end
   end
 end
