@@ -1,14 +1,23 @@
 require 'rails_helper'
 RSpec.describe Buyer, type: :model do
-  before do
-    @buyer = FactoryBot.build(:purchase_buyer)
+
+ before do
+    user = FactoryBot.create(:user)
+    item = FactoryBot.create(:item) 
+    @buyer = FactoryBot.build(:purchase_buyer, user_id: user.id, item_id: item.id)
   end
 
-  describe '配送情報登録' do
+   describe '配送情報登録' do
     context '新規登録できる場合' do
       it 'postalcode 、prefecture_id、city 、house_number、phone_numberが存在すれば登録できる' do
         expect(@buyer).to be_valid
       end
+
+      it 'building_nameが空の場合でも登録できる' do
+        @buyer.building_name = ''
+        expect(@buyer).to be_valid
+      end
+
     end
 
     context '新規登録できない場合' do
@@ -54,10 +63,20 @@ RSpec.describe Buyer, type: :model do
       expect(@buyer.errors.full_messages).to include("Phone number is invalid")
       end
 
-      it "tokenが空では登録できないこと" do
-        @purchase.token = nil
-        @purchase.valid?
-        expect(@purchase.errors.full_messages).to include("Token can't be blank")
+      it '電話番号は、10桁未満では保存できない' do
+        @buyer.phone_number = '123456789'
+        expect(@buyer).not_to be_valid
+      end
+
+      it '電話番号は、12桁以上では保存できない' do
+        @buyer.phone_number = '123456789101'
+        expect(@buyer).not_to be_valid
+      end
+
+     it "tokenが空では登録できないこと" do
+        @buyer.token = nil
+        @buyer.valid?
+        expect(@buyer.errors.full_messages).to include("Token can't be blank")
       end
       
     end

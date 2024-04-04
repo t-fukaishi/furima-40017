@@ -7,7 +7,7 @@ class PurchaseBuyer
       validates :city
       validates :house_number
       validates :phone_number, format: { with: /\A\d+\z/}, length: { minimum: 10  , message: "Phone number is too short (minimum is 10 characters)"}
-      #validates :phone_number, format: { with: /\A\d+\z/}
+      validates :phone_number, length: { maximum: 11 }
       validates :user_id
       validates :item_id
       validates :token

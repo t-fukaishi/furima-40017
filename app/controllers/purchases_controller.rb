@@ -4,14 +4,7 @@ class PurchasesController < ApplicationController
   before_action :set_item, only: [:index, :create]
 
   before_action :redirect_if_not_eligible, only: [:index]
-
-  before_action :set_purchase, only: [:show, :edit]
-  before_action :move_to_index, except: [:index, :show, :search]
   
-  class Purchase
-    attr_accessor :price, :token
-  end
-
   def index
    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
    @purchase = PurchaseBuyer.new
@@ -19,7 +12,6 @@ class PurchasesController < ApplicationController
   end
 
   def create
-    #Purchase.create(purchase_params)
     @purchase = PurchaseBuyer.new(purchase_params)
     @item = Item.find(purchase_params[:item_id])
 
@@ -39,10 +31,6 @@ class PurchasesController < ApplicationController
   def purchase_params
     params.require(:purchase_buyer).permit(:postalcode, :prefecture_id, :city, :house_number, :building_name, :phone_number).merge(token: params[:token], user_id: current_user.id,item_id: params[:item_id])
   end
-
-  #class Purchase
-    #attr_accessor :token
-  #end
 
   def pay_item
     Payjp.api_key = ENV["PAYJP_SECRET_KEY"]  # 自身のPAY.JPテスト秘密鍵を記述しましょう
