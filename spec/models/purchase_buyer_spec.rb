@@ -69,6 +69,18 @@ RSpec.describe Buyer, type: :model do
         expect(@buyer.errors.full_messages).to include("Phone number must be a number without hyphen and within 10 to 11 characters")
       end
 
+     it 'user_idが空では保存できない' do
+        @buyer.user_id = nil
+        @buyer.valid?
+        expect(@buyer.errors.full_messages).to include("User can't be blank")
+      end
+      
+      it 'item_idが空では保存できない' do
+        @buyer.item_id = nil
+        @buyer.valid?
+        expect(@buyer.errors.full_messages).to include("Item can't be blank")
+      end
+
       it "tokenが空では登録できないこと" do
         @buyer.token = nil
         @buyer.valid?
