@@ -49,6 +49,12 @@ RSpec.describe Buyer, type: :model do
       @buyer.house_number = ''
       @buyer.valid?
       expect(@buyer.errors.full_messages).to include("House number can't be blank")
+      end
+      
+      it '電話番号が空では保存できない' do
+       @buyer.phone_number = ''
+       @buyer.valid?
+       expect(@buyer.errors.full_messages).to include("Phone number can't be blank")
       end 
 
      it '電話番号は、10桁以上11桁以内の半角数値でなければ保存できない' do
