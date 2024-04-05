@@ -1,11 +1,6 @@
 FactoryBot.define do
-  before do
-  user = FactoryBot.create(:user)
-  item = FactoryBot.create(:item, user_id: user.id)
-  @buyer = FactoryBot.build(:buyer)
-  end
 
-  factory :purchase_buyer do
+factory :purchase_buyer do
     
     postalcode { '123-4567' }
     prefecture_id { 2 }

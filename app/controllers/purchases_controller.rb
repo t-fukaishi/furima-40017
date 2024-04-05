@@ -8,12 +8,12 @@ class PurchasesController < ApplicationController
   def index
    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
    @purchase = PurchaseBuyer.new
-   @item = Item.find(params[:item_id])
+
   end
 
   def create
     @purchase = PurchaseBuyer.new(purchase_params)
-    @item = Item.find(purchase_params[:item_id])
+
 
     if @purchase.valid?
       

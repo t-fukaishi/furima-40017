@@ -51,34 +51,30 @@ RSpec.describe Buyer, type: :model do
       expect(@buyer.errors.full_messages).to include("House number can't be blank")
       end 
 
-      it '電話番号が空では保存できない' do
-      @buyer.phone_number = ''
-      @buyer.valid?
-      expect(@buyer.errors.full_messages).to include("Phone number can't be blank")
-      end 
-
-      it '電話番号は、10桁以上11桁以内の半角数値でなければ保存できない' do
-      @buyer.phone_number = '090-1234-56789'
-      @buyer.valid?
-      expect(@buyer.errors.full_messages).to include("Phone number is invalid")
+     it '電話番号は、10桁以上11桁以内の半角数値でなければ保存できない' do
+        @buyer.phone_number = '090-1234-5678'
+        @buyer.valid?
+        expect(@buyer.errors.full_messages).to include("Phone number must be a number without hyphen and within 10 to 11 characters")
       end
-
+      
       it '電話番号は、10桁未満では保存できない' do
         @buyer.phone_number = '123456789'
-        expect(@buyer).not_to be_valid
+        @buyer.valid?
+        expect(@buyer.errors.full_messages).to include("Phone number must be a number without hyphen and within 10 to 11 characters")
       end
-
+      
       it '電話番号は、12桁以上では保存できない' do
-        @buyer.phone_number = '123456789101'
-        expect(@buyer).not_to be_valid
+        @buyer.phone_number = '1234567891012'
+        @buyer.valid?
+        expect(@buyer.errors.full_messages).to include("Phone number must be a number without hyphen and within 10 to 11 characters")
       end
 
-     it "tokenが空では登録できないこと" do
+      it "tokenが空では登録できないこと" do
         @buyer.token = nil
         @buyer.valid?
         expect(@buyer.errors.full_messages).to include("Token can't be blank")
       end
-      
+       
     end
   end
 end

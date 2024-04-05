@@ -5,9 +5,13 @@ class PurchaseBuyer
       validates :postalcode, format: { with: /\A\d{3}-\d{4}\z/, message: "is invalid. Enter it as follows (e.g. 123-4567)" }
       validates :prefecture_id , numericality: { greater_than: 0, only_integer: true, message: "can't be blank"}
       validates :city
+      
       validates :house_number
-      validates :phone_number, format: { with: /\A\d+\z/}, length: { minimum: 10  , message: "Phone number is too short (minimum is 10 characters)"}
-      validates :phone_number, length: { maximum: 11 }
+
+      validates :phone_number, format: { with: /\A\d{10,11}\z/, message: 'must be a number without hyphen and within 10 to 11 characters' }
+      #validates :phone_number, format: { with: /\A\d+\z/}, length: { minimum: 10 , "Phone number is too short (minimum is 10 characters)"}
+      #validates :phone_number, length: { maximum: 11 }, length: { minimum: 10  , message: "Phone number is too long (maximum is 11 characters)"}
+
       validates :user_id
       validates :item_id
       validates :token
