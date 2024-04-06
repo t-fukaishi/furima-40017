@@ -1,9 +1,11 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, except: [:new, :create, :index, :show]
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_item, only: [:show, :edit, :update, :destroy]
   before_action :redirect_if_sold_out, only: [:edit, :update]
   before_action :redirect_root, only: [:show]
   before_action :redirect_root, only: [:show]
+
+  
   def index
     @items = Item.order('created_at DESC')
   end
@@ -17,7 +19,8 @@ class ItemsController < ApplicationController
     if @item.save
       redirect_to root_path
     else
-      render :new, status: :unprocessable_entity
+      redirect_to new_item_path
+      #render :new, status: :unprocessable_entity
     end
   end
 
