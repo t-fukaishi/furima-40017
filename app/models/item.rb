@@ -4,6 +4,7 @@ class Item < ApplicationRecord
   belongs_to :user
 
   extend ActiveHash::Associations::ActiveRecordExtensions
+  validates :image, presence: true
   belongs_to :category
   belongs_to :condition
   belongs_to :delivery_fee_payment
